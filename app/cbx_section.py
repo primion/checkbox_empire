@@ -4,6 +4,8 @@
 
 import json
 from app.cbx_group import CbxGroup
+from app.cbx_item import CbxItem
+from app.cbx_control import CbxControl
 
 
 class CbxSection():
@@ -37,6 +39,19 @@ class CbxSection():
                                      ordinal = group_data["Ordinal"],
                                      shortname = group_data["ShortName"],
                                      name = group_data["Name"])
+                for item in group_data["Items"]:
+                    new_item = CbxItem(shortcode = item["Shortcode"],
+                                       ordinal = item["Ordinal"],
+                                       name = item["Name"])
+                    for control in item["Items"]:
+                        new_control = CbxControl(shortcode = control["Shortcode"],
+                                                 ordinal = control["Ordinal"],
+                                                 description = control["Description"],
+                                                 cwe = control["CWE"],
+                                                 nist = control["NIST"],
+                                                 requirement_matrix = {})
+                        new_item.add_control(new_control)
+                    new_group.add_item(new_item)
                 self.groups.append(new_group)
 
 
@@ -67,4 +82,9 @@ Description: {description}
         print(out)
         for g in self.groups:
             g.pretty_print()
+            for i in g.items:
+                i.pretty_print()
+                for c in i.get_controls():
+                    c.pretty_print()
+
 
