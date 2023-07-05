@@ -16,7 +16,7 @@ class CbxEmpire():
         """Load configuration and create the project based on it."""
         # TODO: Proper config loader
         new_section = CbxSection("ASVS for planning", "ASVS_PLAN", "Using ASVS list for planning")
-        new_section.load_asvs_json(filename)
+        new_section.load_isvs_json(filename)
         self.sections.append(new_section)
 
     def pretty_print(self):

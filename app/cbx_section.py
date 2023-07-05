@@ -25,6 +25,38 @@ class CbxSection():
 
         self.groups = []
 
+    def load_isvs_json(self, filename: str) -> None:
+        """ Load ISVS style json """
+
+        self.data_name = "None"
+        self.data_shortname = "None"
+        self.data_version = "None"
+        self.data_description = "None"
+
+        with open(filename, "rt", encoding="utf-8") as fh:
+            data = json.load(fh)
+            new_group = CbxGroup(shortcode = "None",
+                                 ordinal = "1",
+                                 shortname = "None",
+                                 name = "None")
+            new_item = CbxItem(shortcode = "None",
+                               ordinal = "None",
+                               name = "None")
+
+            for control in data:
+                new_control = CbxControl(shortcode = control["ID"],
+                                         ordinal = 0,
+                                         description = control["Description"],
+                                         cwe = [],
+                                         nist = [],
+                                         requirement_matrix = {})
+                new_item.add_control(new_control)
+
+
+            new_group.add_item(new_item)
+            self.groups.append(new_group)
+
+
     def load_asvs_json(self, filename: str) -> None:
         """Load ASVS json."""
         with open(filename, "rt", encoding="utf-8") as fh:
