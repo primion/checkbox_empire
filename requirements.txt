@@ -2,3 +2,4 @@ mypy
 nox
 bandit
 sphinx
+tomlkit

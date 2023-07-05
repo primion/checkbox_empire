@@ -2,6 +2,7 @@
 
 from typing import List
 from app.cbx_section import CbxSection
+import tomlkit
 
 
 class CbxEmpire():
@@ -23,3 +24,15 @@ class CbxEmpire():
 
         for s in self.sections:
             s.pretty_print()
+
+    def to_dict(self):
+        """ Convert data to dict """
+        data = {"sections":[]}
+        for section in self.sections:
+            data["sections"].append(section.to_dict())
+        return data
+
+    def dump_to_toml(self, filename):
+        """ Dump all the data to a toml file """
+        with open(filename, "wt") as fh:
+            fh.write(tomlkit.dumps(self.to_dict()))

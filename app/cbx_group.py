@@ -21,6 +21,16 @@ class CbxGroup():
         """ Adds an item to the internal item list """
         self.items.append(item)
 
+    def to_dict(self):
+        res = {"shortcode": self.shortcode,
+               "ordinal": self.ordinal,
+               "shortname": self.shortname,
+               "name": self.name,
+               "items":[]}
+        for item in self.items:
+            res["items"].append(item.to_dict())
+        return res
+
     def pretty_print(self):
         """ Pretty print the group """
         out = """

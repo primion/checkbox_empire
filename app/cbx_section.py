@@ -54,7 +54,20 @@ class CbxSection():
                     new_group.add_item(new_item)
                 self.groups.append(new_group)
 
+    def to_dict(self):
+        res = {"manual_name": self.manual_name,
+                "manual_prefix": self.manual_prefix,
+                "manual_description": self.manual_description,
+                "data_name": self.data_name,
+                "data_shortname": self.data_shortname,
+                "data_version": self.data_version,
+                "data_description": self.data_description,
+                "groups": []}
 
+        for group in self.groups:
+            res["groups"].append(group.to_dict())
+
+        return res
 
     def pretty_print(self):
         """ Print pretty to stdout """

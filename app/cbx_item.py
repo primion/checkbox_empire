@@ -20,6 +20,15 @@ class CbxItem():
     def get_controls(self):
         return self.controls
 
+    def to_dict(self):
+        res = {"shortcode": self.shortcode,
+               "ordinal": self.ordinal,
+               "name": self.name,
+               "controls": []}
+        for control in self.controls:
+            res["controls"].append(control.to_dict())
+        return res
+
     def pretty_print(self):
         """ Pretty output for the control container """
         out = """

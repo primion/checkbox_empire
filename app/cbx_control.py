@@ -2,6 +2,15 @@
 
 """A single checkbox item called "control"."""
 from typing import List
+from enum import Enum
+
+class State(Enum):
+    """ State of the checkbox """
+
+    UNCHECKED = "unchecked"
+    CHECKED = "checked"
+    NOT_RELEVANT = "not_relevant"
+
 
 class CbxControl():
     """A checkbox item."""
@@ -14,6 +23,7 @@ class CbxControl():
         self.description = description
         self.cwe:List(int) = cwe
         self.nist = nist
+        self.state:State = State.UNCHECKED
 
         # TODO manage requirement matrix
 
@@ -31,6 +41,16 @@ class CbxControl():
                 "Requirement": ""
               },
         """
+
+    def to_dict(self):
+        res = {"shortcode": self.shortcode,
+               "ordinal": self.ordinal,
+               "description": self.description,
+               "CWE": self.cwe,
+               "NIST": self.nist,
+               "state": self.state.name}
+        return res
+
     def pretty_print(self):
         """ Pretty output for the control"""
 
