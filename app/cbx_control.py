@@ -15,7 +15,7 @@ class State(Enum):
 class CbxControl():
     """A checkbox item."""
 
-    def __init__(self, shortcode, ordinal, description, cwe, nist, requirement_matrix) -> None:
+    def __init__(self, shortcode, ordinal, description, cwe, nist, requirement_matrix, statement="") -> None:
         """Create a control object."""
 
         self.shortcode = shortcode
@@ -24,6 +24,7 @@ class CbxControl():
         self.cwe:List(int) = cwe
         self.nist = nist
         self.state:State = State.UNCHECKED
+        self.statement = statement
 
         # TODO manage requirement matrix
 
@@ -48,7 +49,8 @@ class CbxControl():
                "description": self.description,
                "CWE": self.cwe,
                "NIST": self.nist,
-               "state": self.state.name}
+               "state": self.state.name,
+               "statement": self.statement}
         return res
 
     def pretty_print(self):
@@ -57,10 +59,11 @@ class CbxControl():
         cwe =",".join([str(x) for x in self.cwe])
         nist = ",".join(self.nist)
 
-        out = """            - {shortcode} {description} CWE: {cwe} NIST: {nist} """.format(shortcode = self.shortcode,
+        out = """            - {shortcode} {description} {statement} CWE: {cwe} NIST: {nist} """.format(shortcode = self.shortcode,
                    description = self.description,
                    cwe = cwe,
-                   nist = nist
+                   nist = nist,
+                   statement = self.statement
                    )
 
         print(out)

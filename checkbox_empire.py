@@ -18,6 +18,7 @@ if __name__ == "__main__":
 
     cbe = CbxEmpire()
     # cbe.load_config("data/OWASP.Application.Security.Verification.Standard.4.0.3-en.json")
-    cbe.load_config("data/OWASP_ISVS-1.0RC.json")
+    # cbe.load_config("data/OWASP_ISVS-1.0RC.json")
+    cbe.load_config("data/OWASP_MASVS.yaml")
     cbe.pretty_print()
     cbe.dump_to_toml("testfile.toml")

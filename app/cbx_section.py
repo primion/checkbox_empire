@@ -3,6 +3,7 @@
 """A section in the document. Collecting several checkbox tests."""
 
 import json
+import yaml
 from app.cbx_group import CbxGroup
 from app.cbx_item import CbxItem
 from app.cbx_control import CbxControl
@@ -24,6 +25,39 @@ class CbxSection():
         self.data_description = None
 
         self.groups = []
+
+    def load_masvs_yaml(self, filename: str) -> None:
+        """ Load MASVS style xaml files """
+
+        with open(filename, "rt", encoding="utf-8") as fh:
+            data = yaml.load(fh, Loader=yaml.Loader)
+            self.data_name =  data["metadata"]["title"]
+            self.data_shortname =  data["metadata"]["remarks"]
+            self.data_version =  data["metadata"]["version"]
+            self.data_description =  ""
+
+            for group in data["groups"]:
+                new_group = CbxGroup(shortcode = group["id"],
+                        ordinal = group["index"],
+                        shortname = group["title"],
+                        name = group["description"])
+
+                new_item = CbxItem(shortcode = "None",
+                    ordinal = "None",
+                    name = "None")
+
+                for control in group["controls"]:
+                    new_control = CbxControl(shortcode = control["id"],
+                                            ordinal = 0,
+                                            description = control["description"],
+                                            cwe = [],
+                                            nist = [],
+                                            requirement_matrix = {},
+                                            statement = control["statement"])
+                    new_item.add_control(new_control)
+                new_group.add_item(new_item)
+                self.groups.append(new_group)
+
 
     def load_isvs_json(self, filename: str) -> None:
         """ Load ISVS style json """
