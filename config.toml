@@ -1,0 +1,24 @@
+project = "Foo"
+
+[sections]
+
+[sections.alpha]
+name = "OWASP ASVS"
+prefix = "OWASP_ASVS"
+description = "Application Security Verification Standard"
+data_file = "data/OWASP.Application.Security.Verification.Standard.4.0.3-en.json"
+file_type = "OWASP_ASVS_JSON"
+
+[sections.beta]
+name = "OWASP ISVS"
+prefix = "OWASP_ISVS"
+description = "IoT Security Verification Standard"
+data_file = "data/OWASP_ISVS-1.0RC.json"
+file_type = "OWASP_ISVS_JSON"
+
+[sections.gamma]
+name = "OWASP MASVS"
+prefix = "OWASP_MASVS"
+description = "Mobile Application Security Verification Standard"
+data_file = "data/OWASP_MASVS.yaml"
+file_type = "OWASP_MASVS_YAML"
