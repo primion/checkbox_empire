@@ -53,7 +53,8 @@ class CbxSection():
                                             cwe = [],
                                             nist = [],
                                             requirement_matrix = {},
-                                            statement = control["statement"])
+                                            statement = control["statement"],
+                                            section_prefix = self.manual_prefix)
                     new_item.add_control(new_control)
                 new_group.add_item(new_item)
                 self.groups.append(new_group)
@@ -83,7 +84,8 @@ class CbxSection():
                                          description = control["Description"],
                                          cwe = [],
                                          nist = [],
-                                         requirement_matrix = {})
+                                         requirement_matrix = {},
+                                         section_prefix = self.manual_prefix)
                 new_item.add_control(new_control)
 
 
@@ -115,7 +117,8 @@ class CbxSection():
                                                  description = control["Description"],
                                                  cwe = control["CWE"],
                                                  nist = control["NIST"],
-                                                 requirement_matrix = {})
+                                                 requirement_matrix = {},
+                                                 section_prefix = self.manual_prefix)
                         new_item.add_control(new_control)
                     new_group.add_item(new_item)
                 self.groups.append(new_group)

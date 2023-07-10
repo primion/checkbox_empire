@@ -15,7 +15,7 @@ class State(Enum):
 class CbxControl():
     """A checkbox item."""
 
-    def __init__(self, shortcode, ordinal, description, cwe, nist, requirement_matrix, statement="") -> None:
+    def __init__(self, shortcode, ordinal, description, cwe, nist, requirement_matrix, statement="", section_prefix = "") -> None:
         """Create a control object."""
 
         self.shortcode = shortcode
@@ -25,6 +25,7 @@ class CbxControl():
         self.nist = nist
         self.state:State = State.UNCHECKED
         self.statement = statement
+        self.section_prefix = section_prefix
 
         # TODO manage requirement matrix
 
@@ -43,6 +44,11 @@ class CbxControl():
               },
         """
 
+    def get_uid(self):
+        """ Get unique ID """
+        return self.section_prefix + "-" + self.shortcode
+
+
     def to_dict(self):
         res = {"shortcode": self.shortcode,
                "ordinal": self.ordinal,
@@ -50,7 +56,8 @@ class CbxControl():
                "CWE": self.cwe,
                "NIST": self.nist,
                "state": self.state.name,
-               "statement": self.statement}
+               "statement": self.statement,
+               "uid": self.get_uid()}
         return res
 
     def pretty_print(self):
@@ -59,11 +66,12 @@ class CbxControl():
         cwe =",".join([str(x) for x in self.cwe])
         nist = ",".join(self.nist)
 
-        out = """            - {shortcode} {description} {statement} CWE: {cwe} NIST: {nist} """.format(shortcode = self.shortcode,
+        out = """            - :{uid}: {shortcode} {description} {statement} CWE: {cwe} NIST: {nist} """.format(shortcode = self.shortcode,
                    description = self.description,
                    cwe = cwe,
                    nist = nist,
-                   statement = self.statement
+                   statement = self.statement,
+                   uid = self.get_uid()
                    )
 
         print(out)
