@@ -3,10 +3,13 @@
 """A section in the document. Collecting several checkbox tests."""
 
 import json
+from typing import Dict, Optional
+
 import yaml
+
+from app.cbx_control import CbxControl
 from app.cbx_group import CbxGroup
 from app.cbx_item import CbxItem
-from app.cbx_control import CbxControl
 
 
 class CbxSection():
@@ -14,15 +17,15 @@ class CbxSection():
 
     def __init__(self, name: str, prefix: str, description: str):
         """Create a section object."""
-        self.manual_name = name
-        self.manual_prefix = prefix
-        self.manual_description = description
+        self.manual_name: Optional[str] = name
+        self.manual_prefix: Optional[str] = prefix
+        self.manual_description: Optional[str] = description
 
         # From data file
-        self.data_name = None
-        self.data_shortname = None
-        self.data_version = None
-        self.data_description = None
+        self.data_name: Optional[str] = None
+        self.data_shortname: Optional[str] = None
+        self.data_version: Optional[str] = None
+        self.data_description: Optional[str] = None
 
         self.groups = []
 
@@ -30,7 +33,7 @@ class CbxSection():
         """ Load MASVS style xaml files """
 
         with open(filename, "rt", encoding="utf-8") as fh:
-            data = yaml.load(fh, Loader=yaml.Loader)
+            data = yaml.safe_load(fh)
             self.data_name = data["metadata"]["title"]
             self.data_shortname = data["metadata"]["remarks"]
             self.data_version = data["metadata"]["version"]
@@ -120,7 +123,8 @@ class CbxSection():
                     new_group.add_item(new_item)
                 self.groups.append(new_group)
 
-    def to_dict(self):
+    def to_dict(self) -> Dict:
+        """ Return class attributes as dict """
         res = {"manual_name": self.manual_name,
                "manual_prefix": self.manual_prefix,
                "manual_description": self.manual_description,
@@ -135,33 +139,27 @@ class CbxSection():
 
         return res
 
-    def pretty_print(self):
+    def pretty_print(self) -> None:
         """ Print pretty to stdout """
 
-        out = """
-Section {mname}
+        out = f"""
+Section {self.manual_name}
 ***************
-User-prefix: {mprefix}
-User-description: {mdescription}
+User-prefix: {self.manual_prefix}
+User-description: {self.manual_description}
 
 Data file
 *********
-Name: {name}
-Shortname: {shortname}
-Version: {version}
-Description: {description}
-        """.format(mname=self.manual_name,
-                   mprefix=self.manual_prefix,
-                   mdescription=self.manual_description,
-                   name=self.data_name,
-                   shortname=self.data_shortname,
-                   version=self.data_version,
-                   description=self.data_description)
+Name: {self.data_name}
+Shortname: {self.data_shortname}
+Version: {self.data_version}
+Description: {self.data_description}
+        """
 
         print(out)
-        for g in self.groups:
-            g.pretty_print()
-            for i in g.items:
-                i.pretty_print()
-                for c in i.get_controls():
-                    c.pretty_print()
+        for group in self.groups:
+            group.pretty_print()
+            for item in group.items:
+                item.pretty_print()
+                for control in item.get_controls():
+                    control.pretty_print()

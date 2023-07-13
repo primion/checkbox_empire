@@ -17,7 +17,7 @@ class CbxGroup():
         self.name = name
         self.items:List[CbxItem] = []
 
-    def add_item(self, item: CbxItem):
+    def add_item(self, item: CbxItem) -> None:
         """ Adds an item to the internal item list """
         self.items.append(item)
 
@@ -31,7 +31,7 @@ class CbxGroup():
             res["items"].append(item.to_dict())
         return res
 
-    def pretty_print(self):
+    def pretty_print(self) -> None:
         """ Pretty print the group """
         out = """
     Group {shortcode}  {shortname}

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """A single checkbox item called "control"."""
-from typing import List
+from typing import List, Dict, Any, Union, Sequence
 from enum import Enum
 
 class State(Enum):
@@ -15,14 +15,14 @@ class State(Enum):
 class CbxControl():
     """A checkbox item."""
 
-    def __init__(self, shortcode, ordinal, description, cwe, nist, requirement_matrix, statement="", section_prefix = "") -> None:
+    def __init__(self, shortcode: str, ordinal: int, description: str, cwe: List[int], nist: List[str], requirement_matrix: Dict[Any, Any], statement: str="", section_prefix: str = "") -> None:
         """Create a control object."""
 
         self.shortcode = shortcode
-        self.ordinal = ordinal
+        self.ordinal: int = ordinal
         self.description = description
-        self.cwe:List(int) = cwe
-        self.nist = nist
+        self.cwe:List[int] = cwe
+        self.nist: List[str] = nist
         self.state:State = State.UNCHECKED
         self.statement = statement
         self.section_prefix = section_prefix
@@ -44,12 +44,12 @@ class CbxControl():
               },
         """
 
-    def get_uid(self):
+    def get_uid(self) -> str:
         """ Get unique ID """
         return self.section_prefix + "-" + self.shortcode
 
 
-    def to_dict(self):
+    def to_dict(self) -> dict[str, Sequence[object]]:
         res = {"shortcode": self.shortcode,
                "ordinal": self.ordinal,
                "description": self.description,
@@ -60,7 +60,7 @@ class CbxControl():
                "uid": self.get_uid()}
         return res
 
-    def pretty_print(self):
+    def pretty_print(self) -> None:
         """ Pretty output for the control"""
 
         cwe =",".join([str(x) for x in self.cwe])

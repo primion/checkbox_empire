@@ -3,3 +3,6 @@ nox
 bandit
 sphinx
 tomlkit
+
+# Typing
+types-PyYAML
