@@ -4,6 +4,7 @@
 from typing import List
 from app.cbx_control import CbxControl
 
+
 class CbxItem():
     """A checkbox item, a collection of controls."""
 
@@ -12,9 +13,9 @@ class CbxItem():
         self.shortcode = shortcode
         self.ordinal = ordinal
         self.name = name
-        self.controls:List[CbxControl] = []
+        self.controls: List[CbxControl] = []
 
-    def add_control(self, control:CbxControl):
+    def add_control(self, control: CbxControl):
         self.controls.append(control)
 
     def get_controls(self):
@@ -36,8 +37,8 @@ class CbxItem():
         ***************
         Name: {name}
 
-        """.format(shortcode = self.shortcode,
-                   name = self.name,
+        """.format(shortcode=self.shortcode,
+                   name=self.name,
                    )
 
         print(out)

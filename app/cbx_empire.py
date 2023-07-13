@@ -19,9 +19,9 @@ class CbxEmpire():
             print(data)
             for cs_name in data["sections"].keys():
                 # data["sections"][cs_name]["data_file"]
-                new_section = CbxSection(name = data["sections"][cs_name]["name"],
-                                         prefix = data["sections"][cs_name]["prefix"],
-                                         description = data["sections"][cs_name]["description"])
+                new_section = CbxSection(name=data["sections"][cs_name]["name"],
+                                         prefix=data["sections"][cs_name]["prefix"],
+                                         description=data["sections"][cs_name]["description"])
                 if data["sections"][cs_name]["file_type"] == "OWASP_ASVS_JSON":
                     new_section.load_asvs_json(data["sections"][cs_name]["data_file"])
                 elif data["sections"][cs_name]["file_type"] == "OWASP_ISVS_JSON":
@@ -32,7 +32,6 @@ class CbxEmpire():
 
                 self.sections.append(new_section)
 
-
     def pretty_print(self):
         """ Do some pretty printing """
 
@@ -41,7 +40,7 @@ class CbxEmpire():
 
     def to_dict(self):
         """ Convert data to dict """
-        data = {"sections":[]}
+        data = {"sections": []}
         for section in self.sections:
             data["sections"].append(section.to_dict())
         return data
