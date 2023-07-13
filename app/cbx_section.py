@@ -3,7 +3,7 @@
 """A section in the document. Collecting several checkbox tests."""
 
 import json
-from typing import Dict, Optional
+from typing import Optional, List, Union
 
 import yaml
 
@@ -27,7 +27,7 @@ class CbxSection():
         self.data_version: Optional[str] = None
         self.data_description: Optional[str] = None
 
-        self.groups = []
+        self.groups: list[CbxGroup] = []
 
     def load_masvs_yaml(self, filename: str) -> None:
         """Load MASVS style xaml files."""
@@ -38,15 +38,19 @@ class CbxSection():
             self.data_version = data["metadata"]["version"]
             self.data_description = ""
 
+            item_count = 0
+
             for group in data["groups"]:
                 new_group = CbxGroup(shortcode=group["id"],
-                                     ordinal=group["index"],
+                                     ordinal=int(group["index"]),
                                      shortname=group["title"],
                                      name=group["description"])
 
                 new_item = CbxItem(shortcode="None",
-                                   ordinal="None",
+                                   ordinal=item_count,
                                    name="None")
+
+                item_count += 1
 
                 for control in group["controls"]:
                     new_control = CbxControl(shortcode=control["id"],
@@ -68,24 +72,31 @@ class CbxSection():
         self.data_version = "None"
         self.data_description = "None"
 
+        group_count = 0
+        item_count = 0
+        control_count = 0
+
         with open(filename, "rt", encoding="utf-8") as fh:
             data = json.load(fh)
             new_group = CbxGroup(shortcode="None",
-                                 ordinal="1",
+                                 ordinal=group_count,
                                  shortname="None",
                                  name="None")
+            group_count += 1
             new_item = CbxItem(shortcode="None",
-                               ordinal="None",
+                               ordinal=item_count,
                                name="None")
+            item_count += 1
 
             for control in data:
                 new_control = CbxControl(shortcode=control["ID"],
-                                         ordinal=0,
+                                         ordinal=control_count,
                                          description=control["Description"],
                                          cwe=[],
                                          nist=[],
                                          requirement_matrix={},
                                          section_prefix=self.manual_prefix)
+                control_count += 1
                 new_item.add_control(new_control)
 
             new_group.add_item(new_item)
@@ -121,19 +132,20 @@ class CbxSection():
                     new_group.add_item(new_item)
                 self.groups.append(new_group)
 
-    def to_dict(self) -> Dict:
+    def to_dict(self) -> dict[str, Union[Optional[str], List[dict[str, Union[Optional[str], int, List[dict[str, Union[Optional[str], int, List[dict[str, Union[Optional[str], int, List[str], List[int]]]]]]]]]]]]:
         """Return class attributes as dict."""
-        res = {"manual_name": self.manual_name,
-               "manual_prefix": self.manual_prefix,
-               "manual_description": self.manual_description,
-               "data_name": self.data_name,
-               "data_shortname": self.data_shortname,
-               "data_version": self.data_version,
-               "data_description": self.data_description,
-               "groups": []}
+        res: dict[str, Union[Optional[str], List[dict[str, Union[Optional[str], int, List[dict[str, Union[Optional[str], int, List[dict[str, Union[Optional[str], int, List[str], List[int]]]]]]]]]]]] = {"manual_name": self.manual_name,
+                                                                                                                                                                                                          "manual_prefix": self.manual_prefix,
+                                                                                                                                                                                                          "manual_description": self.manual_description,
+                                                                                                                                                                                                          "data_name": self.data_name,
+                                                                                                                                                                                                          "data_shortname": self.data_shortname,
+                                                                                                                                                                                                          "data_version": self.data_version,
+                                                                                                                                                                                                          "data_description": self.data_description,
+                                                                                                                                                                                                          "groups": []}
 
         for group in self.groups:
-            res["groups"].append(group.to_dict())
+            if isinstance(res["groups"], list):
+                res["groups"].append(group.to_dict())
 
         return res
 

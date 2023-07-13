@@ -1,6 +1,6 @@
 """Master class to collect several checkbox sections and process them. Also generates reports."""
 
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Union, Optional
 
 import tomlkit
 
@@ -18,19 +18,19 @@ class CbxEmpire():
         """Load configuration and create the project based on it."""
         with open(filename, "rt", encoding="UTF-8") as fh:
             data = tomlkit.load(fh)
-            print(data)
-            for cs_name in data["sections"].keys():
-                # data["sections"][cs_name]["data_file"]
-                new_section = CbxSection(name=data["sections"][cs_name]["name"],
-                                         prefix=data["sections"][cs_name]["prefix"],
-                                         description=data["sections"][cs_name]["description"])
-                if data["sections"][cs_name]["file_type"] == "OWASP_ASVS_JSON":
-                    new_section.load_asvs_json(data["sections"][cs_name]["data_file"])
-                elif data["sections"][cs_name]["file_type"] == "OWASP_ISVS_JSON":
-                    new_section.load_isvs_json(data["sections"][cs_name]["data_file"])
-                elif data["sections"][cs_name]["file_type"] == "OWASP_MASVS_YAML":
-                    new_section.load_masvs_yaml(str(data["sections"][cs_name]["data_file"]))
-                # new_section.load_masvs_yaml(data["sections"][cs_name]["data_file"])
+
+            sections = data["sections"]
+
+            for item in sections.items():  # type: ignore
+                new_section = CbxSection(name=item[1]["name"],
+                                         prefix=item[1]["prefix"],
+                                         description=item[1]["description"])
+                if item[1]["file_type"] == "OWASP_ASVS_JSON":
+                    new_section.load_asvs_json(item[1]["data_file"])
+                elif item[1]["file_type"] == "OWASP_ISVS_JSON":
+                    new_section.load_isvs_json(item[1]["data_file"])
+                elif item[1]["file_type"] == "OWASP_MASVS_YAML":
+                    new_section.load_masvs_yaml(str(item[1]["data_file"]))
 
                 self.sections.append(new_section)
 
@@ -41,7 +41,7 @@ class CbxEmpire():
 
     def to_dict(self) -> Dict[Any, Any]:
         """Convert data to dict."""
-        data: Dict[str, List[Dict[Any, Any]]] = {"sections": []}
+        data: dict[str, list[dict[str, Union[Optional[str], List[dict[str, Union[Optional[str], int, List[dict[str, Union[Optional[str], int, List[dict[str, Union[Optional[str], int, List[str], List[int]]]]]]]]]]]]]] = {"sections": []}
         for section in self.sections:
             data["sections"].append(section.to_dict())
         return data

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """A single checkbox item called "control"."""
-from typing import List, Dict, Any, Union, Sequence
+from typing import List, Dict, Any, Union, Sequence, Optional
 from enum import Enum
 
 class State(Enum):
@@ -15,7 +15,7 @@ class State(Enum):
 class CbxControl():
     """A checkbox item."""
 
-    def __init__(self, shortcode: str, ordinal: int, description: str, cwe: List[int], nist: List[str], requirement_matrix: Dict[Any, Any], statement: str="", section_prefix: str = "") -> None:
+    def __init__(self, shortcode: str, ordinal: int, description: str, cwe: List[int], nist: List[str], requirement_matrix: Dict[Any, Any], statement: str="", section_prefix: Optional[str] = "") -> None:
         """Create a control object."""
         self.shortcode = shortcode
         self.ordinal: int = ordinal
@@ -24,7 +24,7 @@ class CbxControl():
         self.nist: List[str] = nist
         self.state:State = State.UNCHECKED
         self.statement = statement
-        self.section_prefix = section_prefix
+        self.section_prefix: Optional[str] = section_prefix   # TODO: Maybe prefix can not be optional to have a uniqe ID
 
         # TODO manage requirement matrix
 
@@ -45,12 +45,14 @@ class CbxControl():
 
     def get_uid(self) -> str:
         """Get unique ID."""
+        if self.section_prefix is None:
+            return "-" + self.shortcode
         return self.section_prefix + "-" + self.shortcode
 
 
-    def to_dict(self) -> dict[str, Sequence[object]]:
+    def to_dict(self) -> dict[str, Union[Optional[str], int, List[str], List[int]]]:
         """Return control data as dict."""
-        res = {"shortcode": self.shortcode,
+        res: dict[str, Union[Optional[str], int, List[str], List[int]]] = {"shortcode": self.shortcode,
                "ordinal": self.ordinal,
                "description": self.description,
                "CWE": self.cwe,
