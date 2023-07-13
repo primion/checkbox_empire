@@ -35,19 +35,18 @@ class CbxEmpire():
                 self.sections.append(new_section)
 
     def pretty_print(self) -> None:
-        """ Do some pretty printing """
-
+        """Do some pretty printing."""
         for section in self.sections:
             section.pretty_print()
 
     def to_dict(self) -> Dict[Any, Any]:
-        """ Convert data to dict """
+        """Convert data to dict."""
         data: Dict[str, List[Dict[Any, Any]]] = {"sections": []}
         for section in self.sections:
             data["sections"].append(section.to_dict())
         return data
 
     def dump_to_toml(self, filename: str) -> None:
-        """ Dump all the data to a toml file """
+        """Dump all the data to a toml file."""
         with open(filename, "wt", encoding="UTF-8") as fh:
             fh.write(tomlkit.dumps(self.to_dict()))

@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
+"""A group collects several controls belonging to the same topic. A kind of document-subsection."""
+
+
 from app.cbx_item import CbxItem
 from typing import List
-
-"""A group collects several controls belonging to the same topic. A kind of document-subsection."""
 
 
 class CbxGroup():
@@ -18,10 +19,11 @@ class CbxGroup():
         self.items:List[CbxItem] = []
 
     def add_item(self, item: CbxItem) -> None:
-        """ Adds an item to the internal item list """
+        """Add an item to the internal item list."""
         self.items.append(item)
 
     def to_dict(self):
+        """Return the item as a dict."""
         res = {"shortcode": self.shortcode,
                "ordinal": self.ordinal,
                "shortname": self.shortname,
@@ -32,7 +34,7 @@ class CbxGroup():
         return res
 
     def pretty_print(self) -> None:
-        """ Pretty print the group """
+        """Pretty print the group."""
         out = """
     Group {shortcode}  {shortname}
     ***************

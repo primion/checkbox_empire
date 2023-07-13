@@ -13,7 +13,7 @@ from app.cbx_item import CbxItem
 
 
 class CbxSection():
-    """Load data from a data file. This is a section in the document. A single data file can be loaded several times for different sections (for example use similar checklists for planning and testing)"""
+    """Load data from a data file. This is a section in the document. A single data file can be loaded several times for different sections (for example use similar checklists for planning and testing)."""
 
     def __init__(self, name: str, prefix: str, description: str):
         """Create a section object."""
@@ -30,8 +30,7 @@ class CbxSection():
         self.groups = []
 
     def load_masvs_yaml(self, filename: str) -> None:
-        """ Load MASVS style xaml files """
-
+        """Load MASVS style xaml files."""
         with open(filename, "rt", encoding="utf-8") as fh:
             data = yaml.safe_load(fh)
             self.data_name = data["metadata"]["title"]
@@ -63,8 +62,7 @@ class CbxSection():
                 self.groups.append(new_group)
 
     def load_isvs_json(self, filename: str) -> None:
-        """ Load ISVS style json """
-
+        """Load ISVS style json."""
         self.data_name = "None"
         self.data_shortname = "None"
         self.data_version = "None"
@@ -124,7 +122,7 @@ class CbxSection():
                 self.groups.append(new_group)
 
     def to_dict(self) -> Dict:
-        """ Return class attributes as dict """
+        """Return class attributes as dict."""
         res = {"manual_name": self.manual_name,
                "manual_prefix": self.manual_prefix,
                "manual_description": self.manual_description,
@@ -140,8 +138,7 @@ class CbxSection():
         return res
 
     def pretty_print(self) -> None:
-        """ Print pretty to stdout """
-
+        """Print pretty to stdout."""
         out = f"""
 Section {self.manual_name}
 ***************

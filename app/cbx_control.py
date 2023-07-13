@@ -5,7 +5,7 @@ from typing import List, Dict, Any, Union, Sequence
 from enum import Enum
 
 class State(Enum):
-    """ State of the checkbox """
+    """State of the checkbox."""
 
     UNCHECKED = "unchecked"
     CHECKED = "checked"
@@ -17,7 +17,6 @@ class CbxControl():
 
     def __init__(self, shortcode: str, ordinal: int, description: str, cwe: List[int], nist: List[str], requirement_matrix: Dict[Any, Any], statement: str="", section_prefix: str = "") -> None:
         """Create a control object."""
-
         self.shortcode = shortcode
         self.ordinal: int = ordinal
         self.description = description
@@ -45,11 +44,12 @@ class CbxControl():
         """
 
     def get_uid(self) -> str:
-        """ Get unique ID """
+        """Get unique ID."""
         return self.section_prefix + "-" + self.shortcode
 
 
     def to_dict(self) -> dict[str, Sequence[object]]:
+        """Return control data as dict."""
         res = {"shortcode": self.shortcode,
                "ordinal": self.ordinal,
                "description": self.description,
@@ -61,8 +61,7 @@ class CbxControl():
         return res
 
     def pretty_print(self) -> None:
-        """ Pretty output for the control"""
-
+        """Pretty output for the control."""
         cwe =",".join([str(x) for x in self.cwe])
         nist = ",".join(self.nist)
 

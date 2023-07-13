@@ -16,15 +16,15 @@ class CbxItem():
         self.controls: List[CbxControl] = []
 
     def add_control(self, control: CbxControl) -> None:
-        """ Add a control to the item """
+        """Add a control to the item."""
         self.controls.append(control)
 
     def get_controls(self) -> List[CbxControl]:
-        """ Return a list of controls in this item """
+        """Return a list of controls in this item."""
         return self.controls
 
     def to_dict(self) -> dict[str, Sequence[object]]:
-        """ Returns this control as dict """
+        """Return this control as dict."""
         res = {"shortcode": self.shortcode,
                "ordinal": self.ordinal,
                "name": self.name,
@@ -34,7 +34,7 @@ class CbxItem():
         return res
 
     def pretty_print(self) -> None:
-        """ Pretty output for the control container """
+        """Pretty output for the control container."""
         out = f"""
         Item {self.shortcode}
         ***************
