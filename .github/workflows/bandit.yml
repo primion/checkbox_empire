@@ -1,4 +1,4 @@
-# Run safety to check for vulnerabilities in dependencies
+# Run bandit security tests
 
 name: CI
 
@@ -27,6 +27,5 @@ jobs:
       - uses: excitedleigh/setup-nox@v2.0.0
 
       # Runs a single command using the runners shell
-      - name: Run pylint
-        run: nox -s pylint
-
+      - name: Run bandit
+        run: nox -s bandit
