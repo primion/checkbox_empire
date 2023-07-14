@@ -61,3 +61,12 @@ class CbxEmpire():
                         if control.get_uid() == uid:
                             return control
         return None
+
+    def print_control_list(self) -> None:
+        """Find and return a control by uid."""
+        for section in self.sections:
+            for group in section.get_groups():
+                for item in group.get_items():
+                    for control in item.get_controls():
+                        text = control.statement or control.description
+                        print(f"[{control.state.name}] {control.get_uid()}\t  {text}\t ")

@@ -15,7 +15,7 @@ class State(Enum):
 class CbxControl():
     """A checkbox item."""
 
-    def __init__(self, shortcode: str, ordinal: int, description: str, cwe: List[int], nist: List[str], requirement_matrix: Dict[Any, Any], statement: str="", section_prefix: Optional[str] = "") -> None:
+    def __init__(self, shortcode: str, ordinal: int, description: str, cwe: List[int], nist: List[str], requirement_matrix: Dict[Any, Any], statement: Optional[str]=None, section_prefix: Optional[str] = "") -> None:
         """Create a control object."""
         self.shortcode = shortcode
         self.ordinal: int = ordinal

@@ -26,6 +26,14 @@ def show(largs: argparse.Namespace) -> None:
         cbx_control.pretty_print()
 
 
+def list_controls(largs: argparse.Namespace) -> None:
+    """List controls."""
+    cbe = CbxEmpire()
+    cbe.load_config(largs.config)
+
+    cbe.print_control_list()
+
+
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Manage compliance documents')
@@ -43,6 +51,10 @@ if __name__ == "__main__":
     parser_show.set_defaults(func=show)
     parser_show.add_argument('uid', default=None, help='uid of the element to show details for')
 
+    # create the parser for the "list" command
+    parser_list = subparsers.add_parser('list', help='list controls')
+    parser_list.set_defaults(func=list_controls)
+
     args = parser.parse_args()
 
     args.func(args)
@@ -52,3 +64,5 @@ if __name__ == "__main__":
     # export html
     # mark item
     # list
+
+    # Add OWASP WSTG https://github.com/OWASP/wstg/blob/master/checklists/checklist.json
