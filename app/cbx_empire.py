@@ -5,6 +5,7 @@ from typing import Any, Dict, List, Union, Optional
 import tomlkit
 
 from app.cbx_section import CbxSection
+from app.cbx_control import CbxControl
 
 
 class CbxEmpire():
@@ -46,7 +47,17 @@ class CbxEmpire():
             data["sections"].append(section.to_dict())
         return data
 
-    def dump_to_toml(self, filename: str) -> None:
+    def export_to_toml(self, filename: str) -> None:
         """Dump all the data to a toml file."""
         with open(filename, "wt", encoding="UTF-8") as fh:
             fh.write(tomlkit.dumps(self.to_dict()))
+
+    def find_control_by_uid(self, uid: str) -> Optional[CbxControl]:
+        """Find and return a control by uid."""
+        for section in self.sections:
+            for group in section.get_groups():
+                for item in group.get_items():
+                    for control in item.get_controls():
+                        if control.get_uid() == uid:
+                            return control
+        return None

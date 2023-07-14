@@ -172,3 +172,7 @@ Description: {self.data_description}
                 item.pretty_print()
                 for control in item.get_controls():
                     control.pretty_print()
+
+    def get_groups(self) -> list[CbxGroup]:
+        """Return a list of groups."""
+        return self.groups
