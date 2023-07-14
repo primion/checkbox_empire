@@ -34,6 +34,15 @@ def list_controls(largs: argparse.Namespace) -> None:
     cbe.print_control_list()
 
 
+def mark_control(largs: argparse.Namespace) -> None:
+    """Mark a  control."""
+    cbe = CbxEmpire()
+    cbe.load_config(largs.config)
+    cbe.mark_control(largs.uid, largs.state, largs.statement)
+
+    cbe.save_toml_database()
+
+
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Manage compliance documents')
@@ -55,6 +64,13 @@ if __name__ == "__main__":
     parser_list = subparsers.add_parser('list', help='list controls')
     parser_list.set_defaults(func=list_controls)
 
+    # create the parser for the "mark" command
+    parser_mark = subparsers.add_parser('mark', help='mark a control with a state and a comment')
+    parser_mark.set_defaults(func=mark_control)
+    parser_mark.add_argument('uid', default=None, help='uid of the element to mark')
+    parser_mark.add_argument('state', default=None, help='state to write')
+    parser_mark.add_argument('--statement', default="", help='comment why this state is set')
+
     args = parser.parse_args()
 
     args.func(args)
@@ -63,6 +79,5 @@ if __name__ == "__main__":
     # Parser commands:
     # export html
     # mark item
-    # list
 
     # Add OWASP WSTG https://github.com/OWASP/wstg/blob/master/checklists/checklist.json

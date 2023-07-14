@@ -12,6 +12,7 @@ class State(Enum):
     NOT_RELEVANT = "not_relevant"
 
 
+
 class CbxControl():
     """A checkbox item."""
 
@@ -76,3 +77,13 @@ class CbxControl():
                    )
 
         print(out)
+
+    def set_state(self, state: str, statement: str) -> None:
+        """Set the state."""
+        try:
+          self.state = State(state)
+        except ValueError as e:
+            print("Wrong state. Available states: ")
+            print(",".join([e.value for e in State]))
+
+        self.statement = statement
