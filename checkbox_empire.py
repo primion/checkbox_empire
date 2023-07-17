@@ -42,7 +42,8 @@ def mark_control(largs: argparse.Namespace) -> None:
 
     cbe.save_toml_database()
 
-def create_parser():
+
+def create_parser() -> argparse.ArgumentParser:
     """Create the command line parser."""
     lparser = argparse.ArgumentParser(description='Manage compliance documents')
     lparser.add_argument('--config', type=str, default="config.toml", help='The main configuration file')
@@ -71,6 +72,7 @@ def create_parser():
     parser_mark.add_argument('--statement', default="", help='Comment why this state is set')
 
     return lparser
+
 
 if __name__ == "__main__":
     parser = create_parser()
