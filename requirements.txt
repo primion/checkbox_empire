@@ -6,3 +6,9 @@ tomlkit
 
 # Typing
 types-PyYAML
+
+# Sphinx stuff
+sphinx>=4.2.0
+sphinx-argparse
+sphinxcontrib-autoyaml
+sphinx-pyreverse>=0.0.17
