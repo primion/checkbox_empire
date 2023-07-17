@@ -47,3 +47,7 @@ class CbxGroup():
                    )
 
         print(out)
+
+    def get_items(self) -> list[CbxItem]:
+        """Return a list of items in this group."""
+        return self.items

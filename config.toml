@@ -1,5 +1,7 @@
 project = "Foo"
 
+database_file_toml = "database.toml"
+
 [sections]
 
 [sections.alpha]

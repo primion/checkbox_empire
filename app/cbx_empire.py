@@ -5,6 +5,7 @@ from typing import Any, Dict, List, Union, Optional
 import tomlkit
 
 from app.cbx_section import CbxSection
+from app.cbx_control import CbxControl
 
 
 class CbxEmpire():
@@ -13,11 +14,19 @@ class CbxEmpire():
     def __init__(self) -> None:
         """Init empty checkbox empire class. Add sections by config or manually later."""
         self.sections: List[CbxSection] = []
+        self.database_file_toml: Optional[str] = None
+        self.config_file: Optional[str] = None
+        self.project: Optional[str] = None
 
     def load_config(self, filename: str) -> None:
         """Load configuration and create the project based on it."""
         with open(filename, "rt", encoding="UTF-8") as fh:
             data = tomlkit.load(fh)
+
+            if "database_file_toml" in data:
+                self.database_file_toml = str(data["database_file_toml"])
+            self.config_file = filename
+            self.project = str(data["project"])
 
             sections = data["sections"]
 
@@ -34,6 +43,32 @@ class CbxEmpire():
 
                 self.sections.append(new_section)
 
+        # Load project specific states for the controls
+        self.load_toml_database()
+
+    def load_toml_database(self) -> None:
+        """Load the database assigning states to controls."""
+        if self.database_file_toml is not None:
+            with open(self.database_file_toml, "rt", encoding="UTF-8") as fh:
+                data = tomlkit.load(fh)
+                if "controls" in data:
+                    for control in data.item("controls"):   # type: ignore
+                        self.mark_control(control["uid"], control["state"], control["statement"])
+
+    def save_toml_database(self) -> None:
+        """Save the database assigning states to controls."""
+        if self.database_file_toml is not None:
+            data: dict[str, list[dict[str, str]]] = {"controls": []}
+            for section in self.sections:
+                for group in section.get_groups():
+                    for item in group.get_items():
+                        for control in item.get_controls():
+                            data["controls"].append({"uid": control.get_uid(),
+                                                     "state": control.state.value,
+                                                     "statement": control.statement or ""})
+            with open(self.database_file_toml, "wt", encoding="UTF-8") as fh:
+                tomlkit.dump(data, fh)
+
     def pretty_print(self) -> None:
         """Do some pretty printing."""
         for section in self.sections:
@@ -46,7 +81,32 @@ class CbxEmpire():
             data["sections"].append(section.to_dict())
         return data
 
-    def dump_to_toml(self, filename: str) -> None:
+    def export_to_toml(self, filename: str) -> None:
         """Dump all the data to a toml file."""
         with open(filename, "wt", encoding="UTF-8") as fh:
             fh.write(tomlkit.dumps(self.to_dict()))
+
+    def find_control_by_uid(self, uid: str) -> Optional[CbxControl]:
+        """Find and return a control by uid."""
+        for section in self.sections:
+            for group in section.get_groups():
+                for item in group.get_items():
+                    for control in item.get_controls():
+                        if control.get_uid() == uid:
+                            return control
+        return None
+
+    def print_control_list(self) -> None:
+        """Find and return a control by uid."""
+        for section in self.sections:
+            for group in section.get_groups():
+                for item in group.get_items():
+                    for control in item.get_controls():
+                        text = control.statement or control.description
+                        print(f"[{control.state.name}] {control.get_uid()}\t  {text}\t ")
+
+    def mark_control(self, uid: str, state: str, statement: str = "") -> None:
+        """Set the state of a uid."""
+        control = self.find_control_by_uid(uid)
+        if control is not None:
+            control.set_state(state, statement)

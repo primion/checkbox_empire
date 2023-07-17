@@ -12,10 +12,11 @@ class State(Enum):
     NOT_RELEVANT = "not_relevant"
 
 
+
 class CbxControl():
     """A checkbox item."""
 
-    def __init__(self, shortcode: str, ordinal: int, description: str, cwe: List[int], nist: List[str], requirement_matrix: Dict[Any, Any], statement: str="", section_prefix: Optional[str] = "") -> None:
+    def __init__(self, shortcode: str, ordinal: int, description: str, cwe: List[int], nist: List[str], requirement_matrix: Dict[Any, Any], statement: Optional[str]=None, section_prefix: Optional[str] = "") -> None:
         """Create a control object."""
         self.shortcode = shortcode
         self.ordinal: int = ordinal
@@ -76,3 +77,13 @@ class CbxControl():
                    )
 
         print(out)
+
+    def set_state(self, state: str, statement: str) -> None:
+        """Set the state."""
+        try:
+          self.state = State(state)
+        except ValueError as e:
+            print("Wrong state. Available states: ")
+            print(",".join([e.value for e in State]))
+
+        self.statement = statement
