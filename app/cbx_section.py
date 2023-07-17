@@ -16,7 +16,14 @@ class CbxSection():
     """Load data from a data file. This is a section in the document. A single data file can be loaded several times for different sections (for example use similar checklists for planning and testing)."""
 
     def __init__(self, name: str, prefix: str, description: str):
-        """Create a section object."""
+        """Create a section object.
+
+        A section represents a checklist like ASVS, MASVS or similar with several groups, items and controls.
+
+        :param name: The name of the section
+        :param prefix: The unique prefix of the section
+        :param description: the description of the section
+        """
         self.manual_name: Optional[str] = name
         self.manual_prefix: Optional[str] = prefix
         self.manual_description: Optional[str] = description
@@ -30,7 +37,10 @@ class CbxSection():
         self.groups: list[CbxGroup] = []
 
     def load_masvs_yaml(self, filename: str) -> None:
-        """Load MASVS style xaml files."""
+        """Load MASVS style yaml files.
+
+        :param filename: the name of the masvs as a yaml file
+        """
         with open(filename, "rt", encoding="utf-8") as fh:
             data = yaml.safe_load(fh)
             self.data_name = data["metadata"]["title"]
@@ -66,7 +76,10 @@ class CbxSection():
                 self.groups.append(new_group)
 
     def load_isvs_json(self, filename: str) -> None:
-        """Load ISVS style json."""
+        """Load ISVS style json.
+
+        :param filename: the name of the isvs as a json document
+        """
         self.data_name = "None"
         self.data_shortname = "None"
         self.data_version = "None"
@@ -103,7 +116,10 @@ class CbxSection():
             self.groups.append(new_group)
 
     def load_asvs_json(self, filename: str) -> None:
-        """Load ASVS json."""
+        """Load ASVS json.
+
+        :param filename: The filename of the asvs as a json document
+        """
         with open(filename, "rt", encoding="utf-8") as fh:
             data = json.load(fh)
             self.data_name = data["Name"]
@@ -133,7 +149,10 @@ class CbxSection():
                 self.groups.append(new_group)
 
     def to_dict(self) -> dict[str, Union[Optional[str], List[dict[str, Union[Optional[str], int, List[dict[str, Union[Optional[str], int, List[dict[str, Union[Optional[str], int, List[str], List[int]]]]]]]]]]]]:
-        """Return class attributes as dict."""
+        """Return class attributes as dict.
+
+        :returns: A dict containing the core data of this class
+        """
         res: dict[str, Union[Optional[str], List[dict[str, Union[Optional[str], int, List[dict[str, Union[Optional[str], int, List[dict[str, Union[Optional[str], int, List[str], List[int]]]]]]]]]]]] = {"manual_name": self.manual_name,
                                                                                                                                                                                                           "manual_prefix": self.manual_prefix,
                                                                                                                                                                                                           "manual_description": self.manual_description,

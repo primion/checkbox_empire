@@ -19,7 +19,10 @@ class CbxEmpire():
         self.project: Optional[str] = None
 
     def load_config(self, filename: str) -> None:
-        """Load configuration and create the project based on it."""
+        """Load configuration and create the project based on it.
+
+        :param filename: The name of the main config file to load
+        """
         with open(filename, "rt", encoding="UTF-8") as fh:
             data = tomlkit.load(fh)
 
@@ -75,19 +78,29 @@ class CbxEmpire():
             section.pretty_print()
 
     def to_dict(self) -> Dict[Any, Any]:
-        """Convert data to dict."""
+        """Convert data to dict.
+
+        :returns: A dict containing the core data of this class
+        """
         data: dict[str, list[dict[str, Union[Optional[str], List[dict[str, Union[Optional[str], int, List[dict[str, Union[Optional[str], int, List[dict[str, Union[Optional[str], int, List[str], List[int]]]]]]]]]]]]]] = {"sections": []}
         for section in self.sections:
             data["sections"].append(section.to_dict())
         return data
 
     def export_to_toml(self, filename: str) -> None:
-        """Dump all the data to a toml file."""
+        """Dump all the data to a toml file.
+
+        :param filename: The name of the toml to write
+        """
         with open(filename, "wt", encoding="UTF-8") as fh:
             fh.write(tomlkit.dumps(self.to_dict()))
 
     def find_control_by_uid(self, uid: str) -> Optional[CbxControl]:
-        """Find and return a control by uid."""
+        """Find and return a control by uid.
+
+        :param uid: the UID of the element to find
+        :returns: A control or None
+        """
         for section in self.sections:
             for group in section.get_groups():
                 for item in group.get_items():
@@ -106,7 +119,12 @@ class CbxEmpire():
                         print(f"[{control.state.name}] {control.get_uid()}\t  {text}\t ")
 
     def mark_control(self, uid: str, state: str, statement: str = "") -> None:
-        """Set the state of a uid."""
+        """Set the state of a control defined by uid.
+
+        :param uid: the UID of the element to mark
+        :param state: The state to set.
+        :param statement: A statement describing why the state has been set that way
+        """
         control = self.find_control_by_uid(uid)
         if control is not None:
             control.set_state(state, statement)

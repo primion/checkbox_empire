@@ -17,6 +17,18 @@ Welcome to Checkbox Empire's documentation!
 
    basics/configuration
 
+   internals/intro
+
+   internals/empire
+
+   internals/section
+
+   internals/group
+
+   internals/item
+
+   internals/control
+
 Indices and tables
 ==================
 

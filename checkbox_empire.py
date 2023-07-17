@@ -7,7 +7,10 @@ from app.cbx_empire import CbxEmpire
 
 
 def export(largs: argparse.Namespace) -> None:
-    """Export data."""
+    """Export data.
+
+    :param largs: Argparse parsed arguments
+    """
     cbe = CbxEmpire()
     cbe.load_config(largs.config)
     # cbe.pretty_print()
@@ -16,7 +19,10 @@ def export(largs: argparse.Namespace) -> None:
 
 
 def show(largs: argparse.Namespace) -> None:
-    """Show details for a specific element."""
+    """Show details for a specific element.
+
+    :param largs: Argparse parsed arguments
+    """
     cbe = CbxEmpire()
     cbe.load_config(largs.config)
     # cbe.pretty_print()
@@ -27,7 +33,10 @@ def show(largs: argparse.Namespace) -> None:
 
 
 def list_controls(largs: argparse.Namespace) -> None:
-    """List controls."""
+    """List controls.
+
+    :param largs: Argparse parsed arguments
+    """
     cbe = CbxEmpire()
     cbe.load_config(largs.config)
 
@@ -35,7 +44,10 @@ def list_controls(largs: argparse.Namespace) -> None:
 
 
 def mark_control(largs: argparse.Namespace) -> None:
-    """Mark a  control."""
+    """Mark a  control.
+
+    :param largs: Argparse parsed arguments
+    """
     cbe = CbxEmpire()
     cbe.load_config(largs.config)
     cbe.mark_control(largs.uid, largs.state, largs.statement)
@@ -44,7 +56,12 @@ def mark_control(largs: argparse.Namespace) -> None:
 
 
 def create_parser() -> argparse.ArgumentParser:
-    """Create the command line parser."""
+    """Create the command line parser.
+
+    Required by sphinx-argparse to be in a separate def
+
+    :returns: A command line parser
+    """
     lparser = argparse.ArgumentParser(description='Manage compliance documents')
     lparser.add_argument('--config', type=str, default="config.toml", help='The main configuration file')
     subparsers = lparser.add_subparsers(help='sub-commands')

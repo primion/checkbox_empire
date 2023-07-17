@@ -9,22 +9,36 @@ class CbxItem():
     """A checkbox item, a collection of controls."""
 
     def __init__(self, shortcode: str, ordinal: int, name: str) -> None:
-        """Create an item object."""
+        """Create an item object.
+
+        :param shortcode: A short ID code for this item
+        :param ordinal: A counter for this item
+        :param name: The name of this item
+        """
         self.shortcode = shortcode
         self.ordinal = ordinal
         self.name = name
         self.controls: List[CbxControl] = []
 
     def add_control(self, control: CbxControl) -> None:
-        """Add a control to the item."""
+        """Add a control to the item.
+
+        :param control: The control to add
+        """
         self.controls.append(control)
 
     def get_controls(self) -> List[CbxControl]:
-        """Return a list of controls in this item."""
+        """Return a list of controls in this item.
+
+        :returns: The list of controls
+        """
         return self.controls
 
     def to_dict(self) -> dict[str, Union[Optional[str], int, List[dict[str, Union[Optional[str], int, List[str], List[int]]]]]]:
-        """Return this control as dict."""
+        """Return this control as dict.
+
+        :returns: A dict containing the core data of this class
+        """
         res: dict[str, Union[Optional[str], int, List[dict[str, Union[Optional[str], int, List[str], List[int]]]]]] = {"shortcode": self.shortcode,
                                                                                                                        "ordinal": self.ordinal,
                                                                                                                        "name": self.name,
