@@ -11,7 +11,13 @@ class CbxGroup():
     """A group to collect control items."""
 
     def __init__(self, shortcode: str, ordinal: int, shortname: str, name: str) -> None:
-        """Create a group object."""
+        """Create a group object.
+
+        :param shortcode: The code for this group
+        :param ordinal: The counter for this group
+        :param shortname: A short name for this group
+        :param name: A long name for this group
+        """
         self.shortcode = shortcode
         self.ordinal: int = ordinal
         self.shortname = shortname
@@ -19,11 +25,17 @@ class CbxGroup():
         self.items:List[CbxItem] = []
 
     def add_item(self, item: CbxItem) -> None:
-        """Add an item to the internal item list."""
+        """Add an item to the internal item list.
+
+        :param item: The item to add
+        """
         self.items.append(item)
 
     def to_dict(self) -> dict[str, Union[Optional[str], int, List[dict[str, Union[Optional[str], int, List[dict[str, Union[Optional[str], int, List[str], List[int]]]]]]]]]:
-        """Return the item as a dict."""
+        """Return the item as a dict.
+
+        :returns: A dict containing the core data of this class
+        """
         res: dict[str, Union[Optional[str], int, List[dict[str, Union[Optional[str], int, List[dict[str, Union[Optional[str], int, List[str], List[int]]]]]]]]] = {"shortcode": self.shortcode,
                "ordinal": self.ordinal,
                "shortname": self.shortname,
@@ -49,5 +61,8 @@ class CbxGroup():
         print(out)
 
     def get_items(self) -> list[CbxItem]:
-        """Return a list of items in this group."""
+        """Return a list of items in this group.
+
+        :returns: A list of items in this group
+        """
         return self.items
