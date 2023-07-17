@@ -43,6 +43,8 @@ class CbxEmpire():
                     new_section.load_isvs_json(item[1]["data_file"])
                 elif item[1]["file_type"] == "OWASP_MASVS_YAML":
                     new_section.load_masvs_yaml(str(item[1]["data_file"]))
+                elif item[1]["file_type"] == "OWASP_WSTG_JSON":
+                    new_section.load_wstg_json(str(item[1]["data_file"]))
 
                 self.sections.append(new_section)
 

@@ -64,6 +64,8 @@ Must be imported twice: For planning phase and integration test phase !
 
 https://github.com/OWASP/wstg
 
+https://github.com/OWASP/wstg/blob/master/checklists/checklist.json
+
 # Data layer:
 
 Data in the DB file is layer in a complex way. This results in:

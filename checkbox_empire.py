@@ -97,7 +97,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     args.func(args)
-    # TODO: Sphinx documentation for arguments
 
     # Parser commands:
     # export html

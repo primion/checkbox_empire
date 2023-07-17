@@ -148,6 +148,46 @@ class CbxSection():
                     new_group.add_item(new_item)
                 self.groups.append(new_group)
 
+    def load_wstg_json(self, filename: str) -> None:
+        """Load WSTG json.
+
+        :param filename: The filename of the wstg as a json document
+        """
+        with open(filename, "rt", encoding="utf-8") as fh:
+            data = json.load(fh)
+            self.data_name = "WSTG json"
+            self.data_shortname = "WSTGj"
+            self.data_version = ""
+            self.data_description = ""
+
+            group_ordinal = 0
+            test_ordinal = 0
+            control_ordinal = 0
+
+            for group in data["categories"].keys():
+                new_group = CbxGroup(shortcode=data["categories"][group]["id"],
+                                     ordinal=group_ordinal,
+                                     shortname=group,
+                                     name=group)
+                group_ordinal += 1
+                for item in data["categories"][group]["tests"]:
+                    new_item = CbxItem(shortcode=item["id"],
+                                       ordinal=test_ordinal,
+                                       name=item["name"])
+                    test_ordinal += 1
+                    for control in item["objectives"]:
+                        new_control = CbxControl(shortcode=str(control_ordinal),
+                                                 ordinal=control_ordinal,
+                                                 description=control,
+                                                 cwe=[],
+                                                 nist=[],
+                                                 requirement_matrix={},
+                                                 section_prefix=self.manual_prefix)
+                        control_ordinal += 1
+                        new_item.add_control(new_control)
+                    new_group.add_item(new_item)
+                self.groups.append(new_group)
+
     def to_dict(self) -> dict[str, Union[Optional[str], List[dict[str, Union[Optional[str], int, List[dict[str, Union[Optional[str], int, List[dict[str, Union[Optional[str], int, List[str], List[int]]]]]]]]]]]]:
         """Return class attributes as dict.
 
