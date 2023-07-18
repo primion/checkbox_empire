@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Project SSDLC report</title>
+
+<style>
+    .UNCHECKED {
+        background-color: red;
+    }
+    .CHECKED {
+        background-color: lightgreen;
+    }
+    .NOT_RELEVANT {
+        background-color: lightgrey;
+    }
+    </style>
+</head>
+<body>
+
+
+
+{% for section in data.sections %}
+<h1>{{ section.manual_name }}</h1>
+
+
+{% for group in section.groups %}
+<h2> {{group.shortname}} </h2>
+
+{% for item in group.item_list %}
+<h3> {{item.name}} </h3>
+
+<ul>
+{% for control in item.controls%}
+<li><div class={{control.state}}></dic>{{control.state}}   {{control.uid}}: {{control.description}}</div></li>
+{% endfor %} {# Control #}
+</ul>
+
+{% endfor %} {# Items #}
+
+
+{% endfor %} {# Groups #}
+
+
+{% endfor %}  {# Sections #}
+
+
+
+{# a comment #}
+</body>
+</html>

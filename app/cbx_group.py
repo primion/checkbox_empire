@@ -40,10 +40,10 @@ class CbxGroup():
                "ordinal": self.ordinal,
                "shortname": self.shortname,
                "name": self.name,
-               "items":[]}
+               "item_list":[]}
         for item in self.items:
-            if type(res["items"]) is list:
-                res["items"].append(item.to_dict())
+            if type(res["item_list"]) is list:
+                res["item_list"].append(item.to_dict())
         return res
 
     def pretty_print(self) -> None:

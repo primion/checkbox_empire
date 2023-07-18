@@ -3,6 +3,7 @@
 from typing import Any, Dict, List, Union, Optional
 
 import tomlkit
+from jinja2 import Environment, select_autoescape, FileSystemLoader
 
 from app.cbx_section import CbxSection
 from app.cbx_control import CbxControl
@@ -130,3 +131,12 @@ class CbxEmpire():
         control = self.find_control_by_uid(uid)
         if control is not None:
             control.set_state(state, statement)
+
+    def generate_html_report(self, template_file: str, outfile: str) -> None:
+        """Generate a html report."""
+        env = Environment(loader=FileSystemLoader("."),
+                          autoescape=select_autoescape()
+                          )
+        template = env.get_template(template_file)
+        with open(outfile, "wt", encoding="utf-8") as fh:
+            fh.write(template.render(data=self.to_dict()))
