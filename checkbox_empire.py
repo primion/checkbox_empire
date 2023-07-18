@@ -55,6 +55,14 @@ def mark_control(largs: argparse.Namespace) -> None:
     cbe.save_toml_database()
 
 
+def generate_report(largs: argparse.Namespace) -> None:
+    """Generate a report."""
+    cbe = CbxEmpire()
+    cbe.load_config(largs.config)
+    if largs.report_type == "html":
+        cbe.generate_html_report(largs.template, largs.outfile)
+
+
 def create_parser() -> argparse.ArgumentParser:
     """Create the command line parser.
 
@@ -88,6 +96,13 @@ def create_parser() -> argparse.ArgumentParser:
     parser_mark.add_argument('state', default=None, help='State to write')
     parser_mark.add_argument('--statement', default="", help='Comment why this state is set')
 
+    # create the parser for the "report" command
+    parser_report = subparsers.add_parser('report', help='Generate a report')
+    parser_report.set_defaults(func=generate_report)
+    parser_report.add_argument('--report_type', default="html", help='Report type to generate')
+    parser_report.add_argument('--template', default="templates/html_report.html", help='Template to use')
+    parser_report.add_argument('--outfile', default="html_report.html", help='Filename of generated report')
+
     return lparser
 
 
@@ -99,6 +114,7 @@ if __name__ == "__main__":
     args.func(args)
 
     # Parser commands:
-    # export html
+    # TODO: Create a tool where you answer project questions and it will de-activate certain controls based on that
+    # TODO: Better command line help. Especially on wrong commands
 
-    # Add OWASP WSTG https://github.com/OWASP/wstg/blob/master/checklists/checklist.json
+    # TODO: Add top CWE

@@ -3,6 +3,8 @@ nox
 bandit
 sphinx
 tomlkit
+Jinja2
+
 
 # Typing
 types-PyYAML
