@@ -4,6 +4,7 @@
 
 import json
 from typing import Optional, List, Union
+import hashlib
 
 import yaml
 
@@ -176,7 +177,7 @@ class CbxSection():
                                        name=item["name"])
                     test_ordinal += 1
                     for control in item["objectives"]:
-                        new_control = CbxControl(shortcode=str(control_ordinal),
+                        new_control = CbxControl(shortcode=hashlib.md5(bytes(control, encoding="utf-8")).hexdigest(),
                                                  ordinal=control_ordinal,
                                                  description=control,
                                                  cwe=[],
