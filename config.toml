@@ -31,3 +31,33 @@ prefix = "OWASP_WSTG"
 description = "Web Security Testing Guide"
 data_file = "data/OWASP_WSTG.json"
 file_type = "OWASP_WSTG_JSON"
+
+[project_tags]
+# Project offers logins
+login=true
+# Project offers file uploads
+file_upload=true
+# Project offers file downloads
+file_download=true
+# Project uses GraphQL
+graphql=true
+# Project uses http or https as web or API interface
+http_or_https=true
+# Uses a database (SQL, graphql, json, xml...)
+database=true
+# keep deleted and duplicate entries
+keep_deleted=true
+# IoT: project contains IoT or is at least connected to one
+iot=true
+# mobile application: runs on a mobile phone or similar
+mobile=true
+# web technology (using a web page)
+web=true
+# SOAP API technology being used or provided
+soap=true
+# REST API being used or provided ?
+rest=true
+# SQL being used as database ?
+sql=true
+# XML being used for data storage or transfer ?
+xml=true
