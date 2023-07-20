@@ -118,3 +118,9 @@ if __name__ == "__main__":
     # TODO: Better command line help. Especially on wrong commands
 
     # TODO: Add top CWE
+
+    # TODO: Add pydantic when reading data and config giles
+
+    # TODO: Add unit tests
+
+    # TODO: Ensure that the versions of the OWASP databases are locked. Especially WSTG with the ordinals will cause chaos if not.

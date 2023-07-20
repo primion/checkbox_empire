@@ -177,7 +177,7 @@ class CbxSection():
                                        name=item["name"])
                     test_ordinal += 1
                     for control in item["objectives"]:
-                        new_control = CbxControl(shortcode=hashlib.md5(bytes(control, encoding="utf-8")).hexdigest(),
+                        new_control = CbxControl(shortcode=hashlib.md5(bytes(control, encoding="utf-8")).hexdigest(),  # nosec  deactivating bandit. Using the hash not for security reasons. So MD5 is ok
                                                  ordinal=control_ordinal,
                                                  description=control,
                                                  cwe=[],
