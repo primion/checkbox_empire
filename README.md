@@ -42,15 +42,16 @@ https://github.com/OWASP/ASVS/releases/tag/v4.0.3_release
 
 import from json
 
-Must be imported twice: For planning phase and integration test phase !
+MD5SUM: 3780058aabbb2c855b0e159032125b36
 
 ## OWASP MASVS (Mobile)
 
 https://github.com/OWASP/owasp-masvs
+https://github.com/OWASP/owasp-masvs/releases  Version 2.0.0
 
 Import from Yaml
 
-Must be imported twice: For planning phase and integration test phase !
+MD5SUM: d7d8bafa734d51738c7bed41b7d48aab
 
 ## OWASP ISVS (IoT)
 
@@ -58,13 +59,17 @@ https://github.com/OWASP/IoT-Security-Verification-Standard-ISVS/releases/tag/1.
 
 Import from Json
 
-Must be imported twice: For planning phase and integration test phase !
+MD5SUM: 3730500305762843f71dda011c3c5604
 
 ## OWASP WSTG (Web)
 
 https://github.com/OWASP/wstg
 
 https://github.com/OWASP/wstg/blob/master/checklists/checklist.json
+
+(curl the raw version, comment on the checklist used "wstgbot Publish Latest checklists 2023-06-16 (#1068)")
+
+MD5SUM: 98eeb5ad65c0cc5c63ba326973c93ebe
 
 # Data layer:
 
